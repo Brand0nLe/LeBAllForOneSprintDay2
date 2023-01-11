@@ -333,8 +333,8 @@ public class AllForOneController : ControllerBase
 
 
     [HttpGet]
-    [Route("StudentDirectoryFN/{studentFirstName}")]
-    public StudentListModel StudentDirectoryFN(string studentFirstName)
+    [Route("GetStudentByFirstName/{studentFirstName}")]
+    public StudentListModel GetStudentByFirstName(string studentFirstName)
     {
         StudentListModel result = new StudentListModel()
         {
@@ -368,8 +368,8 @@ public class AllForOneController : ControllerBase
 
 
     [HttpGet]
-    [Route("StudentDirectoryLN/{studentLastName}")]
-    public StudentListModel StudentDirectoryLN(string studentLastName)
+    [Route("GetStudentByLastName/{studentLastName}")]
+    public StudentListModel GetStudentByLastName(string studentLastName)
     {
         StudentListModel result = new StudentListModel()
         {
@@ -403,8 +403,8 @@ public class AllForOneController : ControllerBase
 
 
     [HttpGet]
-    [Route("StudentDirectorySN/{studentSlackName}")]
-    public StudentListModel StudentDirectorySN(string studentSlackName)
+    [Route("GetStudentBySlackName/{studentSlackName}")]
+    public StudentListModel GetStudentBySlackName(string studentSlackName)
     {
         StudentListModel result = new StudentListModel()
         {
@@ -438,8 +438,8 @@ public class AllForOneController : ControllerBase
 
 
     [HttpGet]
-    [Route("StudentDirectoryEmail/{studentEmail}")]
-    public StudentListModel StudentDirectoryEmail(string studentEmail)
+    [Route("GetStudentByEmail/{studentEmail}")]
+    public StudentListModel GetStudentByEmail(string studentEmail)
     {
         StudentListModel result = new StudentListModel()
         {
