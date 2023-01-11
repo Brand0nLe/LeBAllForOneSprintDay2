@@ -14,6 +14,7 @@ function studentDirectory() {
     fetch('https://allforoneapibrandon.azurewebsites.net/allforone/GetStudentBySlackName/Brandon Le')
         .then((response) => response.text())
         .then((data) => console.log(data));
+        
 }
 
 function studentDirectory() {
