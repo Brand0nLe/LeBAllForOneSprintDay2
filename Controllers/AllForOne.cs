@@ -25,46 +25,79 @@ public class AllForOneController : ControllerBase
     }
 
     [HttpGet]
-    [Route("AskingQuestions")]
-    public string AskingQuestions()
+    [Route("AskingQuestions/{name}/{time}")]
+    public string askingQuestions(string name, string time)
     {
-        return "It would create a web API application that will ask a series of questions";
+        return $"Hi there what's your name? \n Wow what a beautiful name you have {name}! It's nice to finally meet you! \n What time did you wake up today? \n Wow you woke up at {time} AM?! You must be fully rested :)";
     }
 
     [HttpGet]
-    [Route("Greater or Less Than")]
-    public string GreaterOrLessThan()
+    [Route("GreaterOrLessThan/{number1}/{number2}")]
+    public string greaterOrLessThan(string number1, string number2)
     {
-        return "It would create a web API application that is capable of comparing two numbers and declaring whether they are less than, greater than, or equal to one another.";
+        int convertNum1 = Convert.ToInt32(number1);
+        int convertNum2 = Convert.ToInt32(number2);
+
+        if (convertNum1 > convertNum2)
+        {
+            return $"{convertNum1} is greater than {convertNum2} \n {convertNum2} is less than {convertNum1}";
+        }
+        else if (convertNum1 < convertNum2)
+        {
+            return $"{convertNum2} is greater than {convertNum1} \n {convertNum1} is less than {convertNum2}";
+        }
+        else
+            return $"{convertNum1} is equal to {convertNum2}";
     }
 
     [HttpGet]
-    [Route("MadLib")]
-    public string MadLib()
+    [Route("MadLib/{nameOne}/{nameTwo}/{yummyFlavor}/{nastyFlavor}/{number1}/{animal}/{color}/{number2}/{emotion}/{number3}")]
+    public string MadLib(string nameOne, string nameTwo, string yummyFlavor, string nastyFlavor, int number1, string animal, string color, int number2, string emotion, int number3)
     {
-        return "It would create a web API application that would be able of taking in users input to create a mad lib story.";
+        return $"One day there were two friends named {nameOne} and {nameTwo}. {nameOne} decided they wanted to bake a {yummyFlavor} cake and asked {nameTwo} to come over and help. While they were mixing the ingredients {nameTwo} accidentally grabbed the wrong flavor and added in {nastyFlavor}! Neither of them realized and just continued baking. After {number1} hours they finally finished baking the cake and were ready to decorate. They shaped the cake into a {animal} and put {color} icing on it. After {number2} hours of decorating they finally finished and could taste it! They both took a bite and immediately spit out! Why did the cake taste like {nastyFlavor}?! They were feeling {emotion} after their huge failure and decided to door dash {number3} orders of french fries to make themselves feel better.\n\n\n\n How was it? Wasn't it a ton of fun?!";
     }
 
     [HttpGet]
-    [Route("OddOrEven")]
-    public string OddOrEver()
+    [Route("OddOrEven/{number}")]
+    public string OddOrEven(string number, bool canParse, int validNum, int remainder)
     {
-        return "It would create a web API application that is capable of declaring whether the user inputted number is odd or even.";
+        canParse = Int32.TryParse(number, out validNum);
+
+        if (canParse == false)
+        {
+            return "ERROR invalid entry. You can only input numbers!";
+        }
+        else
+        {
+            if (remainder == (validNum % 2))
+            {
+                return $"Your number {number} is even.";
+            }
+            else
+            {
+                return $"You number {number} is odd";
+            }
+        }
     }
 
     [HttpGet]
-    [Route("ReverseIt")]
-    public string ReverseIt()
+    [Route("ReverseIt/{userInput}")]
+    public string ReverseIt(string userInput)
     {
-        return "It would create a web API application that is capable of taking users input and putting it in the reverse order.";
+        string reversedOutput ="";
+
+    for (int i = userInput.Length - 1; i >= 0; i--)
+    {
+        reversedOutput = reversedOutput + userInput[i];
+    }
+        return reversedOutput;
     }
 
 
 
 
 
-
-// student list starts here
+    // student list starts here
     //making a list of students with the student list model
     public List<StudentListModel> studentsList = new List<StudentListModel>()
         {
@@ -75,7 +108,7 @@ public class AllForOneController : ControllerBase
                 slackName = "Harrison Busby",
                 email = "hbusby@codestack.co",
                 hobbies = "Piano"
-            }, 
+            },
             new StudentListModel(){
                 firstName = "Brandon",
                 lastName = "Le",
@@ -294,7 +327,7 @@ public class AllForOneController : ControllerBase
                 hobbies = "anime, osu player, drawing"
             }
         };
-// End of student list
+    // End of student list
 
 
 
@@ -303,136 +336,140 @@ public class AllForOneController : ControllerBase
     [Route("StudentDirectoryFN/{studentFirstName}")]
     public StudentListModel StudentDirectoryFN(string studentFirstName)
     {
-            StudentListModel result = new StudentListModel(){
-                firstName = "N/A",
-                lastName  = "N/A",
-                slackName = "N/A",
-                email = "N/A",
-                hobbies = "N/A"
-            };
+        StudentListModel result = new StudentListModel()
+        {
+            firstName = "N/A",
+            lastName = "N/A",
+            slackName = "N/A",
+            email = "N/A",
+            hobbies = "N/A"
+        };
 
-            for(int i = 0; i < studentsList.Count; i++)
+        for (int i = 0; i < studentsList.Count; i++)
+        {
+            // condition to check the studentlist firstname to our variable firstname
+
+            if (studentsList[i].firstName == studentFirstName)
             {
-                // condition to check the studentlist firstname to our variable firstname
-
-                if(studentsList[i].firstName == studentFirstName)
-                {
-                    result = studentsList[i];
-                    break;
-                }
-                // else{
-                //     result.firstName = "N/A";
-                //     result.lastName = "N/A";
-                //     result.slackName = "N/A";
-                //     result.email = "N/A";
-                //     result.hobbies = "N/A";
-                // }
+                result = studentsList[i];
+                break;
             }
+            // else{
+            //     result.firstName = "N/A";
+            //     result.lastName = "N/A";
+            //     result.slackName = "N/A";
+            //     result.email = "N/A";
+            //     result.hobbies = "N/A";
+            // }
+        }
 
-            return result;
-        }  
-    
+        return result;
+    }
+
 
     [HttpGet]
     [Route("StudentDirectoryLN/{studentLastName}")]
     public StudentListModel StudentDirectoryLN(string studentLastName)
     {
-            StudentListModel result = new StudentListModel(){
-                firstName = "N/A",
-                lastName  = "N/A",
-                slackName = "N/A",
-                email = "N/A",
-                hobbies = "N/A"
-            };
+        StudentListModel result = new StudentListModel()
+        {
+            firstName = "N/A",
+            lastName = "N/A",
+            slackName = "N/A",
+            email = "N/A",
+            hobbies = "N/A"
+        };
 
-            for(int i = 0; i < studentsList.Count; i++)
+        for (int i = 0; i < studentsList.Count; i++)
+        {
+            // condition to check the studentlist firstname to our variable firstname
+
+            if (studentsList[i].lastName == studentLastName)
             {
-                // condition to check the studentlist firstname to our variable firstname
-
-                if(studentsList[i].lastName == studentLastName)
-                {
-                    result = studentsList[i];
-                    break;
-                }
-                // else{
-                //     result.firstName = "N/A";
-                //     result.lastName = "N/A";
-                //     result.slackName = "N/A";
-                //     result.email = "N/A";
-                //     result.hobbies = "N/A";
-                // }
+                result = studentsList[i];
+                break;
             }
+            // else{
+            //     result.firstName = "N/A";
+            //     result.lastName = "N/A";
+            //     result.slackName = "N/A";
+            //     result.email = "N/A";
+            //     result.hobbies = "N/A";
+            // }
+        }
 
-            return result;
-        }  
+        return result;
+    }
 
 
     [HttpGet]
     [Route("StudentDirectorySN/{studentSlackName}")]
     public StudentListModel StudentDirectorySN(string studentSlackName)
     {
-            StudentListModel result = new StudentListModel(){
-                firstName = "N/A",
-                lastName  = "N/A",
-                slackName = "N/A",
-                email = "N/A",
-                hobbies = "N/A"
-            };
+        StudentListModel result = new StudentListModel()
+        {
+            firstName = "N/A",
+            lastName = "N/A",
+            slackName = "N/A",
+            email = "N/A",
+            hobbies = "N/A"
+        };
 
-            for(int i = 0; i < studentsList.Count; i++)
+        for (int i = 0; i < studentsList.Count; i++)
+        {
+            // condition to check the studentlist firstname to our variable firstname
+
+            if (studentsList[i].slackName == studentSlackName)
             {
-                // condition to check the studentlist firstname to our variable firstname
-
-                if(studentsList[i].slackName == studentSlackName)
-                {
-                    result = studentsList[i];
-                    break;
-                }
-                // else{
-                //     result.firstName = "N/A";
-                //     result.lastName = "N/A";
-                //     result.slackName = "N/A";
-                //     result.email = "N/A";
-                //     result.hobbies = "N/A";
-                // }
+                result = studentsList[i];
+                break;
             }
+            // else{
+            //     result.firstName = "N/A";
+            //     result.lastName = "N/A";
+            //     result.slackName = "N/A";
+            //     result.email = "N/A";
+            //     result.hobbies = "N/A";
+            // }
+        }
 
-            return result;
-        }  
+        return result;
+    }
 
 
     [HttpGet]
     [Route("StudentDirectoryEmail/{studentEmail}")]
     public StudentListModel StudentDirectoryEmail(string studentEmail)
     {
-            StudentListModel result = new StudentListModel(){
-                firstName = "N/A",
-                lastName  = "N/A",
-                slackName = "N/A",
-                email = "N/A",
-                hobbies = "N/A"
-            };
+        StudentListModel result = new StudentListModel()
+        {
+            firstName = "N/A",
+            lastName = "N/A",
+            slackName = "N/A",
+            email = "N/A",
+            hobbies = "N/A"
+        };
 
-            for(int i = 0; i < studentsList.Count; i++)
+        for (int i = 0; i < studentsList.Count; i++)
+        {
+            // condition to check the studentlist firstname to our variable firstname
+
+            if (studentsList[i].email == studentEmail)
             {
-                // condition to check the studentlist firstname to our variable firstname
-
-                if(studentsList[i].email == studentEmail)
-                {
-                    result = studentsList[i];
-                    break;
-                }
-                // else{
-                //     result.firstName = "N/A";
-                //     result.lastName = "N/A";
-                //     result.slackName = "N/A";
-                //     result.email = "N/A";
-                //     result.hobbies = "N/A";
-                // }
+                result = studentsList[i];
+                break;
             }
+            // else{
+            //     result.firstName = "N/A";
+            //     result.lastName = "N/A";
+            //     result.slackName = "N/A";
+            //     result.email = "N/A";
+            //     result.hobbies = "N/A";
+            // }
+        }
 
-            return result;
-        }  
+        return result;
+    }
 
 
 
@@ -444,9 +481,38 @@ public class AllForOneController : ControllerBase
 
 
     [HttpGet]
-    [Route("RestaurantPicker")]
-    public string RestaurantPicker()
+    [Route("RestaurantPicker/{choice}")]
+    public string RestaurantPicker(string choice)
     {
-        return "It would create a web API application that will randomize a list of restaurants back to a user depending on which category of food they choose.";
+
+    string [] asianFood = {"Mama's Pho", "Green Papaya", "Komachi Sushi", "OZ Korean BBQ", "Bonchon", "Royal Siam", "M Sushi", "Tasty Pot", "Blue House Korean BBQ", "RAW Sushi Bistro"};
+    string [] fastFood = {"McDonald's", "Taco Bell", "Wendy's", "Jack In The Box", "Popeye's", "Burger King", "Wingstop", "Sonic's", "Del Taco", "Raising Cane's"};
+    string [] beverages = {"T4", "Happy Lemon", "Jamba Juice", "Bober Tea", "Kung Fu Tea", "7 Leaves Cafe", "Purple Kow", "Boba Guys", "Sharetea", "Tea Dazed"};
+    
+        if(choice == "ASIAN")
+        {
+        Random r = new Random();
+        int randomInt = r.Next(0, 9);
+        return $"You chose Asian Food! You should try: {asianFood[randomInt]}";
+        }
+        
+        if(choice == "FAST")
+        {
+        Random r = new Random();
+        int randomInt = r.Next(0, 9);
+        return $"You chose Fast Food! You should try: {fastFood[randomInt]}";
+        }
+                
+        if(choice == "DRINKS")
+        {
+        Random r = new Random();
+        int randomInt = r.Next(0, 9);
+        return $"Someone's thirsty! You should try: {beverages[randomInt]}";
+        }
+        
+        else
+        {
+            return "You entered an invalid choice! Please enter ASIAN, FAST, or DRINKS.\n **DON'T FORGET TO PUT THEM IN ALL CAPS**";
+        }
     }
 }
