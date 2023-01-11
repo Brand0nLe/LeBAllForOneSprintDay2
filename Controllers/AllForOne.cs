@@ -8,17 +8,20 @@ namespace LeBAllForOneSprintDay2.Controllers;
 public class AllForOneController : ControllerBase
 {
     [HttpGet]
-    [Route("SayHello")]
-    public string SayHello()
+    [Route("SayHello/{name}")]
+    public string SayHello(string name)
     {
-        return "It would create a web API application that will return a Hello message when a name is typed in.";
+        return $"Hello {name}! I hope you're having a great day today! You're doing great! You got this! :)";
     }
 
     [HttpGet]
-    [Route("Add2Numbers")]
-    public string Add2Numbers()
+    [Route("Add2Numbers/{number1}/{number2}")]
+    public int Add2Numbers(string number1, string number2)
     {
-        return "It would create a web API application capable of adding 2 numbers.";
+        int convertNum1 = Convert.ToInt32(number1);
+        int convertNum2 = Convert.ToInt32(number2);
+
+        return convertNum1 + convertNum2;
     }
 
     [HttpGet]
