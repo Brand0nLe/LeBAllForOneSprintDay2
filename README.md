@@ -1,4 +1,7 @@
 Brandon Le
+
 1-10-23
+
 All For One Sprint Day 2
+
 HTML and JS project with fetches for each mini challenge. Should be able to retrieve the data and be able to console log it.    
